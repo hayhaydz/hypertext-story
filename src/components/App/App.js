@@ -27,6 +27,7 @@ function App() {
           <NoMatch />
         </Route>
       </Switch>
+      <div className="App__border"></div>
     </div>
   );
 }

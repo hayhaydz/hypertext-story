@@ -35,7 +35,6 @@ function Home() {
                 </defs>
             </svg>
             </div>
-            <div className="Home__border"></div>
         </div>
     )
 }
