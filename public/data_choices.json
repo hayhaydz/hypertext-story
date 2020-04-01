@@ -1,0 +1,120 @@
+{
+    "choices": 
+    [
+        [
+            {
+                "id": 0,
+                "value": "Pear", 
+                "emoji": "🍐", 
+                "selected": false, 
+                "quality": "good"
+            },
+            {
+                "id": 1,
+                "value": "Apple", 
+                "emoji": "🍎", 
+                "selected": false, 
+                "quality": "okay"
+            },
+            {
+                "id": 2,
+                "value": "Banana", 
+                "emoji": "🍌", 
+                "selected": false, 
+                "quality": "bad"
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "value": "Green Salad", 
+                "emoji": "🥗", 
+                "selected": false, 
+                "quality": "good"
+            },
+            {
+                "id": 1,
+                "value": "Potato", 
+                "emoji": "🥔", 
+                "selected": false, 
+                "quality": "okay"
+            },
+            {
+                "id": 2,
+                "value": "Hot Dog", 
+                "emoji": "🌭", 
+                "selected": false, 
+                "quality": "bad"
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "value": "Burrito", 
+                "emoji": "🌯", 
+                "selected": false, 
+                "quality": "good"
+            },
+            {
+                "id": 1,
+                "value": "Broccoli", 
+                "emoji": "🥦", 
+                "selected": false, 
+                "quality": "okay"
+            },
+            {
+                "id": 2,
+                "value": "Ice Cream", 
+                "emoji": "🍨", 
+                "selected": false, 
+                "quality": "bad"
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "value": "Spaghetti", 
+                "emoji": "🍝", 
+                "selected": false, 
+                "quality": "good"
+            },
+            {
+                "id": 1,
+                "value": "Sushi", 
+                "emoji": "🍣", 
+                "selected": false, 
+                "quality": "okay"
+            },
+            {
+                "id": 2,
+                "value": "Chocolate Bar", 
+                "emoji": "🍫", 
+                "selected": false, 
+                "quality": "bad"
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "value": "Pie", 
+                "emoji": "🥧", 
+                "selected": false, 
+                "quality": "good"
+            },
+            {
+                "id": 1,
+                "value": "Carrot", 
+                "emoji": "🥕", 
+                "selected": false, 
+                "quality": "okay"
+            },
+            {
+                "id": 2,
+                "value": "Candy", 
+                "emoji": "🍬", 
+                "selected": false, 
+                "quality": "bad"
+            }
+        ]
+    ]
+}
