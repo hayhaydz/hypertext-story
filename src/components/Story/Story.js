@@ -15,7 +15,8 @@ class Story extends React.Component {
             choiceElements: [],
             events: [],
             eventsIndex: 0,
-            eventElement: []
+            eventElement: [],
+            progress: 0
         };
 
         this.handleElementClick = this.handleElementClick.bind(this);
@@ -26,8 +27,7 @@ class Story extends React.Component {
     componentDidMount = () => {
         // Fetch choices
         axios.get('./data_choices.json').then(res => {
-            const choices = res.data.choices;
-            // console.log(choices);
+            const choices = this.shuffleArray(res.data.choices);
             this.setState({ choices });
 
             this.setState({choiceElements: this.state.choices[0]});
@@ -42,34 +42,6 @@ class Story extends React.Component {
             this.setState({events});
             this.setState({eventElement: this.state.events[this.state.eventsIndex][1]});
         })
-    }
-
-    componentDidUpdate() {
-        console.log('Current Score: ' + this.state.score);
-
-        if(this.state.score >= (this.state.day - 1) * 5) {
-            // Doing good
-            console.log('Doing good.');
-            // let eventsD = this.state.events;
-            // console.log(eventsD[this.state.eventsIndex][0]);
-            // let eventElementD = eventsD[this.state.eventsIndex][0];
-            // this.setState({eventElement: eventElementD});
-            // this.setState({eventsIndex: this.state.eventsIndex + 1});
-        } else if (this.state.score >= (this.state.day - 1) * 1) {
-            // Doing okay
-            console.log('Doing Okay');
-            // let eventsD = this.state.events;
-            // let eventElementD = eventsD[this.state.eventsIndex][1];
-            // this.setState({eventElement: eventElementD});
-            // this.setState({eventsIndex: this.state.eventsIndex + 1});
-        } else if(this.state.score <= 0) {
-            // Doing bad
-            console.log('Doing bad');
-            // let eventsD = this.state.events;
-            // let eventElementD = eventsD[this.state.eventsIndex][2];
-            // this.setState({eventElement: eventElementD});
-            // this.setState({eventsIndex: this.state.eventsIndex + 1});
-        }
     }
 
     // Shuffle choiceElements
@@ -115,7 +87,7 @@ class Story extends React.Component {
 
     handleBtnClick = e => {
         e.preventDefault();
-        if (this.state.day !== 1 && this.state.day - 1 % 5 !== 0) {
+        if (this.state.progress % 5 !== 0 || this.state.progress === 0) {
             let resetElement = document.getElementsByClassName('Story__options--option-selected');
             resetElement[0].classList.remove('Story__options--option-selected');
             for (let i = 0; i < this.state.choiceElements.length; i++) {
@@ -137,15 +109,35 @@ class Story extends React.Component {
                 }
             }
             this.setState({day: this.state.day + 1});
+            this.setState({progress: this.state.progress + 1});
             this.setState({choicesIndex: this.state.choicesIndex + 1}, () => {
                 let choiceElementsD = this.shuffleArray(this.state.choices[this.state.choicesIndex]);
                 this.setState({choiceElements: choiceElementsD});
             });
+
+            if(this.state.score >= (this.state.day - 1) * 5) {
+                // Doing good
+                let eventsD = this.state.events;
+                let eventElementD = eventsD[this.state.eventsIndex][0];
+                this.setState({eventElement: eventElementD});
+            } else if (this.state.score >= (this.state.day - 1) * 1) {
+                // Doing okay
+                let eventsD = this.state.events;
+                let eventElementD = eventsD[this.state.eventsIndex][1];
+                this.setState({eventElement: eventElementD});
+            } else if(this.state.score <= 0) {
+                // Doing bad
+                let eventsD = this.state.events;
+                let eventElementD = eventsD[this.state.eventsIndex][2];
+                this.setState({eventElement: eventElementD});
+            }
+        } else {
+            this.setState({progress: this.state.progress});
         }
     }
     
     render = () => {
-        if(this.state.day !== 1 && this.state.day - 1 % 5 !== 0) {
+        if(this.state.progress % 5 !== 0 || this.state.progress === 0) {
             return (
                 <div className="Story">
                     <h1 className="Story__title">Day {this.state.day}</h1>
@@ -176,10 +168,10 @@ class Story extends React.Component {
             return (
                 <div className="Story">
                     <div className="Story__update">
-                        <h1 className="Story__update--title">{this.state.eventElement.name}</h1>
+                        <h1 className="Story__update--title">{this.state.eventElement.title}</h1>
                         <p className="Story__update--text">{this.state.eventElement.details}</p>
                     </div>
-                    <button className="Story__btn" onClick={(e) => this.handleBtnClick(e)} disabled={!this.state.selectionMade}>
+                    <button className="Story__btn" onClick={(e) => this.handleBtnClick(e)}>
                         <span>Next</span> 
                         <i className="material-icons">arrow_forward</i>
                     </button>

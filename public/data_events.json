@@ -4,17 +4,17 @@
         [
             {
                 "id": 0,
-                "title": "Outstanding Success",
+                "title": "Outstanding Success.",
                 "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit varius diam quis iaculis. Maecenas maximus vehicula felis, vel tincidunt metus venenatis sed. Sed luctus turpis at finibus pellentesque. Nunc ut dui a enim bibendum auctor molestie vitae leo. Duis commodo commodo lorem ultrices sodales. Nunc euismod hendrerit pretium. Pellentesque blandit lacus dolor. Donec feugiat vel ligula quis finibus. Fusce eros dolor, congue id urna at, maximus sodales felis. Curabitur ut accumsan urna, id sollicitudin nisi. Etiam at sagittis neque, eget bibendum neque."
             },
             {
                 "id": 1,
-                "title": "You're performance is mediocre",
+                "title": "Your performance is mediocre.",
                 "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit varius diam quis iaculis. Maecenas maximus vehicula felis, vel tincidunt metus venenatis sed. Sed luctus turpis at finibus pellentesque. Nunc ut dui a enim bibendum auctor molestie vitae leo. Duis commodo commodo lorem ultrices sodales. Nunc euismod hendrerit pretium. Pellentesque blandit lacus dolor. Donec feugiat vel ligula quis finibus. Fusce eros dolor, congue id urna at, maximus sodales felis. Curabitur ut accumsan urna, id sollicitudin nisi. Etiam at sagittis neque, eget bibendum neque."
             },
             {
                 "id": 2,
-                "title": "Drugs overrun your life",
+                "title": "Drugs overrun your life.",
                 "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit varius diam quis iaculis. Maecenas maximus vehicula felis, vel tincidunt metus venenatis sed. Sed luctus turpis at finibus pellentesque. Nunc ut dui a enim bibendum auctor molestie vitae leo. Duis commodo commodo lorem ultrices sodales. Nunc euismod hendrerit pretium. Pellentesque blandit lacus dolor. Donec feugiat vel ligula quis finibus. Fusce eros dolor, congue id urna at, maximus sodales felis. Curabitur ut accumsan urna, id sollicitudin nisi. Etiam at sagittis neque, eget bibendum neque."
             }
         ],
