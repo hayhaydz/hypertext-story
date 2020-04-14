@@ -11,7 +11,7 @@ function Instructions() {
             </div>
             <h2 className="Instructions__title">Instructions</h2>
             <div className="Instructions__content">
-                <p className="Instructions__content--paragraph">Each day a selection of meal choices will be given to you, you will need to select the best meal choice for that day. Ensure that you maintain a healthy diet.</p>
+                <p className="Instructions__content--paragraph">Each day a selection of meal choices will be given to you, you will need to select the best meal choice for that day. Ensure that you maintain a healthy diet. If you need any help then click the help button in the top right, this can be used a maximum of 5 times throughout the story!</p>
             </div>
             <Link className="Instructions__btn" to="/Story">
                 <span>Next</span> 

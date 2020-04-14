@@ -4,49 +4,78 @@
     height: 100vh;
     z-index: 10;
 
+    &__message {
+      position: absolute;
+      left: 50%;
+      bottom: 75px;
+      transform: translateX(-50%);
+      background-color: #f8f8f8;
+      padding: 1em 2em;
+      border-radius: 5px;
+      box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.05);
+      transition: 200ms ease-in-out;
+      opacity: 0;
+
+      & p {
+          font-family: Roboto, sans-serif;
+      }
+
+      &--positive {
+          color: #51ad2c;
+      }
+
+      &--okay {
+          color: #dd9536;
+      }
+
+      &--negative {
+          color: #ad2c2c;
+      }
+    }
+
     &__btn {
-        position: absolute;
-        right: 75px;
-        bottom: 75px;
-        // display: flex;
-        // align-items: center;
-        font-family: Roboto, sans-serif;
-        font-size: 18px;
-        background-color: #76008F;
-        color: #F3F3F3;
-        padding: 0.6em 1em;
-        box-shadow: 5px -5px 25px rgba(0, 0, 0, 0.15);
-        text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        transition: 200ms ease-in-out;
-  
-        & span {
-          display: inline-block;
-          vertical-align: middle;
-        }
-  
-        & i {
-          font-size: 1em;
-          margin-left: 10px;
-          vertical-align: middle;
-          display: inline-block;
-        }
-  
-        &:hover {
-          background-color: #F0A6FF;
-          box-shadow: 5px -5px 15px rgba(0, 0, 0, 0.25);
-          color: #5B006E;
-        }
+      position: absolute;
+      right: 75px;
+      bottom: 75px;
+      // display: flex;
+      // align-items: center;
+      font-family: Roboto, sans-serif;
+      font-size: 18px;
+      background-color: #76008F;
+      color: #F3F3F3;
+      padding: 0.6em 1em;
+      box-shadow: 5px -5px 25px rgba(0, 0, 0, 0.15);
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: 200ms ease-in-out;
 
-        &:disabled {
-            background-color: #bebebe;
+      & span {
+        display: inline-block;
+        vertical-align: middle;
+      }
 
-            &:hover {
-                cursor: not-allowed;
-                color: #F3F3F3;
-                box-shadow: 5px -5px 25px rgba(0, 0, 0, 0.15);
-            }
-        }
+      & i {
+        font-size: 1em;
+        margin-left: 10px;
+        vertical-align: middle;
+        display: inline-block;
+      }
+
+      &:hover {
+        background-color: #F0A6FF;
+        box-shadow: 5px -5px 15px rgba(0, 0, 0, 0.25);
+        color: #5B006E;
+      }
+
+      &:disabled {
+          background-color: #bebebe;
+
+          &:hover {
+              cursor: not-allowed;
+              color: #F3F3F3;
+              box-shadow: 5px -5px 25px rgba(0, 0, 0, 0.15);
+          }
+      }
     }
 }

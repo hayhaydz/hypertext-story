@@ -8,7 +8,6 @@ import Interlude from './Interlude/Interlude';
 class Story extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             day: 1,
             score: 0,
@@ -19,12 +18,20 @@ class Story extends React.Component {
             events: [],
             eventsIndex: 0,
             eventElement: [],
-            renderChoice: true
+            renderChoice: true,
+            helpCount: 0,
+            helpCountUsed: false,
+            message: {
+                state: "",
+                data: ""
+            }
         };
 
         this.handleElementClick = this.handleElementClick.bind(this);
+        this.handleHelpCLick = this.handleHelpCLick.bind(this);
         this.handleBtnClick = this.handleBtnClick.bind(this);
         this.shuffleArray = this.shuffleArray.bind(this);
+        this.displayMessage = this.displayMessage.bind(this);
     }
 
     componentDidMount = () => {
@@ -66,6 +73,24 @@ class Story extends React.Component {
         return array;
     }
 
+    displayMessage = (data, dataState, duration) => {
+        let message = {
+            state: dataState,
+            data: data
+        }
+        this.setState({message: message},() => {
+            let domElement = document.getElementById('story-message');
+            domElement.style.opacity = 1;
+            setTimeout(() => {
+                domElement.style.opacity = 0;
+                setTimeout(() => {
+                    message.data = "";
+                    this.setState({message: message});
+                }, 200);
+            }, duration);
+        });
+    }
+
     handleElementClick = index => event => {
         // preventing any default DOM action from clicking
         event.preventDefault();
@@ -95,32 +120,96 @@ class Story extends React.Component {
         this.setState({choiceElements: choiceElementsD});
     }
 
+    handleHelpCLick = e => {
+        if (!this.state.helpCountUsed) {
+            if(this.state.helpCount < 5) {
+                for (let i = 0; i < this.state.choiceElements.length; i++) {
+                    let currentElementID = this.state.choiceElements[i].id;
+                    let domChoiceElement = document.getElementById('option_' + currentElementID).children[0];
+                    switch (this.state.choiceElements[i].quality) {
+                        case 'good':
+                            domChoiceElement.classList.add('Choice__options--option-emoji--good');
+                            break;
+                        case 'okay':
+                            domChoiceElement.classList.add('Choice__options--option-emoji--okay');
+                            break;
+                        case 'bad':
+                            domChoiceElement.classList.add('Choice__options--option-emoji--bad');
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                this.setState({helpCountUsed: true});
+                this.setState({helpCount: this.state.helpCount + 1});
+            } else {
+                this.displayMessage("All helpful tips have been used!", "negative", 3000);
+            }
+        }
+    }
+
     handleBtnClick = e => {
         e.preventDefault();
         // If the current rendered component is the choice component
         if (this.state.renderChoice) {
+            // Messages to give based on users choices
+            let feedbackMessages = {
+                positive: [
+                    "Wow! You're on fire.",
+                    "You're acing this!",
+                    "This is incredible work!",
+                    "I've never seen someone do such a great job!",
+                    "Hey! You're pretty good at this."
+                ],
+                okay: [
+                    "That was alright I guess...",
+                    "That wasn't the best choice... but it also wasn't the worst!",
+                    "Eh, that was okay.",
+                    "I guess it wasn't the worst choice you could have made.",
+                    "I believe in you!"
+                ],
+                negative: [
+                    "Wow, that was a terrible choice.",
+                    "Better luck next time!",
+                    "Ugh, I thought you were better than this...",
+                    "You'll get it correct some day.",
+                    "Whoops! That was the wrong choice."
+                ]
+            }
+
             // Reset selected class elements
             let resetElement = document.getElementsByClassName('Choice__options--option-selected');
             resetElement[0].classList.remove('Choice__options--option-selected');
             //Score Delegation
+            let choiceMade;
             for (let i = 0; i < this.state.choiceElements.length; i++) {
                 if (this.state.choiceElements[i].selected) {
                     switch(this.state.choiceElements[i].quality) {
                         case 'good':
                             this.setState({score: this.state.score + 5});
+                            choiceMade = 'positive';
                             break;
                         case 'okay':
                             this.setState({score: this.state.score + 1});
+                            choiceMade = 'okay';
                             break;
                         case 'bad':
                             this.setState({score: this.state.score - 5});
+                            choiceMade = 'negative';
                             break;
                         default:
                             this.setState({score: this.state.score});
                             break;
                     }
                 }
+                if(this.state.helpCountUsed) {
+                    let domElement = document.getElementById('option_'+i).children[0];
+                    domElement.className = "Choice__options--option-emoji";
+                }
             }
+            // Display feedback for user based on their choice
+            this.displayMessage(feedbackMessages[choiceMade][Math.floor(Math.random() * feedbackMessages[choiceMade].length)], choiceMade, 2000);
             // Progress day forward and reset selection made boolean
             this.setState({day: this.state.day + 1, selectionMade: false});
             // Assign new elements for next day
@@ -150,6 +239,10 @@ class Story extends React.Component {
             if(this.state.day % 5 === 0) {
                 this.setState({renderChoice: false});
             }
+
+            if(this.state.helpCountUsed) {
+                this.setState({helpCountUsed: false});
+            }
         } else {
             // if the current rendered component is the interlude component the next button will run this code
             // this code is moving the event index forward and re enabling the choice render boolean
@@ -161,8 +254,11 @@ class Story extends React.Component {
         return (
             <div className="Story">
                 {this.state.renderChoice
-                    ? <Choice elements={this.state.choiceElements} day={this.state.day} handleElementClick={this.handleElementClick} />
+                    ? <Choice elements={this.state.choiceElements} day={this.state.day} handleElementClick={this.handleElementClick} handleHelpClick={this.handleHelpCLick} />
                     : <Interlude title={this.state.eventElement.title} details={this.state.eventElement.details} />
+                }
+                {this.state.message.data !== "" &&
+                    <div className={`Story__message Story__message--${this.state.message.state}`} id="story-message"><p>{this.state.message.data}</p></div>
                 }
                 <button className="Story__btn" onClick={(e) => this.handleBtnClick(e)} disabled={!this.state.selectionMade && this.state.renderChoice}>
                     <span>Next</span> 
