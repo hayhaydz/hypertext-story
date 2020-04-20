@@ -1,0 +1,73 @@
+{
+    "events":
+    [
+        [
+            {
+                "id": 0,
+                "title": "Outstanding Success.",
+                "details": "University life is suiting you well. No assignment can get in the way of your well balanced social and academic life. Friends, teachers and bouncers find you charming. Things are looking good."
+            },
+            {
+                "id": 1,
+                "title": "Your performance is mediocre.",
+                "details": "University is alright. I guess maybe it's homesickness, but sometimes lessons stump you. Your flatmates seem nice but you don’t really have the energy to go out and meet new friends."
+            },
+            {
+                "id": 2,
+                "title": "Drugs overrun your life.",
+                "details": "You turn to deep deep dependence on caffeine. Someone offered you something more illicit and it's starting to look tempting. Lectures are… well, you haven’t really been awake for them. Your flatmates have labelled you are a recluse."
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "title": "You're finding it so easy you get a part time job!",
+                "details": "Well done! You are keeping up with your course and your relationships! Friendships are booming and young love is blossoming. Your lecturers think that you should fast track your way through this degree, your focus is astonishing."
+            },
+            {
+                "id": 1,
+                "title": "You're slipping behind the rest of your class.",
+                "details": "Uni is tough. Everyone knows it. Someone has to be in the bottom half of the class. Not everyone can be the teachers’ pet. Who needs a 1st anyway. And 2.1 and 2.2 sound kinda similar. And if you get a 3rd you can always lie to your mum… right? Also, maybe work on remembering your friends birthdays… they seem to be pulling away from you."
+            },
+            {
+                "id": 2,
+                "title": "On the brink of death let alone dropping out.",
+                "details": "Have you ever considered a multivitamin? Most people eat fruits and vegetables but maybe you should take baby steps on this. The teachers’ are not sure if you are actually still a student, or if you have already dropped out. They haven’t seen you since freshers week. You have become an urban legend amongst your flatmates, they think you might be a ghost…"
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "title": "Lecturers are struggling to critique your work!",
+                "details": "Teachers’ pet is one thing, but your lecturers wished they had kids like you. You make them remember why they want to be in this job. There is no one like you. You charm everyone you meet. That blossoming relationship I mentioned earlier, it has well and truly bloomed, films will be made about your romance."
+            },
+            {
+                "id": 1,
+                "title": "Lecturers pay little attention to you now, they have written you off.",
+                "details": "You know a lot of people drop out in the first year, it's okay to have set backs. I mean maybe this is a pretty big set back. But it's just one fail, right?  Youll have chances to make it up. After all, it's not like your friends want to talk to you. "
+            },
+            {
+                "id": 2,
+                "title": "Friends and family try to hold you together but you're lack of decent nutrition is driving you insane.",
+                "details": "I’m pretty sure you aren’t allowed on campus anymore. There was that time you developed scurvy and in a vitamin-deficient rage ran around pretending to be a pirate. Not cool dude. Someone called the police on you. Maybe it's time to try and get a grip, ahoy me harty?"
+            }
+        ],
+        [
+            {
+                "id": 0,
+                "title": "You graduate as an exemplary student, inundated with job offers.",
+                "details": "Everyone is so proud, I saw your parents shed some tears, your lecturers alongside them. That speech you gave at the graduation ceremony will inspire generations to come. I’m pretty sure they want to name a building after you. More companies than you could ever have dreamed have sent you job offers, you didn’t even need to apply for anything. "
+            },
+            {
+                "id": 1,
+                "title": "You just barely graduate with a below average grade and a disappointed future laying ahead.",
+                "details": "It was graduation. That’s cool. You had a stupid hat and everything. I mean a third is a bit embarrassing but I’m sure you can lie if anyone asks. It's not like they will check… you are an adult now. I guess it's time to go get married, have 2.5 kids and then get divorced, and die young of a stress-induced heart attack from you god awful 9 - 5 job."
+            },
+            {
+                "id": 2,
+                "title": "The university doesn't even invite you to the graduation ceremony.",
+                "details": "I mean what were you expecting. Why on earth would you get a graduation invite, the uni thought you were dead. Going off the radar like that was wild, it's a good thing those paramedics found you. It's was awful, you wandering around talking about being attacked by grapes and carrots. I hope you kept that appoint with the nutritionist the NHS set up for you. "
+            }
+        ]
+    ]
+}
