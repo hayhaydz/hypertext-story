@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import './Story.scss';
+import choicesJSON from '../../assets/json/data_choices.json';
+import eventsJSON from '../../assets/json/data_events.json';
 
 import Choice from './Choice/Choice';
 import Interlude from './Interlude/Interlude';
@@ -34,25 +35,22 @@ class Story extends React.Component {
         this.displayMessage = this.displayMessage.bind(this);
     }
 
-    componentDidMount = () => {
-        // Fetch choices
-        axios.get('./data_choices.json').then(res => {
-            const choices = this.shuffleArray(res.data.choices);
-            this.setState({choices}, () => {
-                this.setState({choiceElements: this.state.choices[0]}, () => {
-                    let choiceElementsD = this.shuffleArray(this.state.choiceElements);
-                    this.setState({choiceElements: choiceElementsD});
-                });
+    componentDidMount() {
+        // Setup choice data
+        let choices = this.shuffleArray(choicesJSON.choices);
+        this.setState({choices}, () => {
+            this.setState({choiceElements: this.state.choices[0]}, () => {
+                let choiceElementsD = this.shuffleArray(this.state.choiceElements);
+                this.setState({choiceElements: choiceElementsD});
             });
-        })
+        });
 
-        axios.get('./data_events.json').then(res => {
-            // Fetch interlude events
-            const events = res.data.events;
-            this.setState({events}, () => {
-                this.setState({eventElement: this.state.events[this.state.eventsIndex][1]});
-            });
-        })
+        // Setup interlude events
+        let events = eventsJSON.events;
+        this.setState({events}, () => {
+            this.setState({eventElement: this.state.events[this.state.eventsIndex][1]});
+        });
+
     }
 
     // Shuffle choiceElements
@@ -153,95 +151,99 @@ class Story extends React.Component {
         e.preventDefault();
         // If the current rendered component is the choice component
         if (this.state.renderChoice) {
-            // Messages to give based on users choices
-            let feedbackMessages = {
-                positive: [
-                    "Wow! You're on fire.",
-                    "You're acing this!",
-                    "This is incredible work!",
-                    "I've never seen someone do such a great job!",
-                    "Hey! You're pretty good at this."
-                ],
-                okay: [
-                    "That was alright I guess...",
-                    "That wasn't the best choice... but it also wasn't the worst!",
-                    "Eh, that was okay.",
-                    "I guess it wasn't the worst choice you could have made.",
-                    "I believe in you!"
-                ],
-                negative: [
-                    "Wow, that was a terrible choice.",
-                    "Better luck next time!",
-                    "Ugh, I thought you were better than this...",
-                    "You'll get it correct some day.",
-                    "Whoops! That was the wrong choice."
-                ]
-            }
+            if(this.state.day !== 20) {
+                // Messages to give based on users choices
+                let feedbackMessages = {
+                    positive: [
+                        "Wow! You're on fire.",
+                        "You're acing this!",
+                        "This is incredible work!",
+                        "I've never seen someone do such a great job!",
+                        "Hey! You're pretty good at this."
+                    ],
+                    okay: [
+                        "That was alright I guess...",
+                        "That wasn't the best choice... but it also wasn't the worst!",
+                        "Eh, that was okay.",
+                        "I guess it wasn't the worst choice you could have made.",
+                        "I believe in you!"
+                    ],
+                    negative: [
+                        "Wow, that was a terrible choice.",
+                        "Better luck next time!",
+                        "Ugh, I thought you were better than this...",
+                        "You'll get it correct some day.",
+                        "Whoops! That was the wrong choice."
+                    ]
+                }
 
-            // Reset selected class elements
-            let resetElement = document.getElementsByClassName('Choice__options--option-selected');
-            resetElement[0].classList.remove('Choice__options--option-selected');
-            //Score Delegation
-            let choiceMade;
-            for (let i = 0; i < this.state.choiceElements.length; i++) {
-                if (this.state.choiceElements[i].selected) {
-                    switch(this.state.choiceElements[i].quality) {
-                        case 'good':
-                            this.setState({score: this.state.score + 5});
-                            choiceMade = 'positive';
-                            break;
-                        case 'okay':
-                            this.setState({score: this.state.score + 1});
-                            choiceMade = 'okay';
-                            break;
-                        case 'bad':
-                            this.setState({score: this.state.score - 5});
-                            choiceMade = 'negative';
-                            break;
-                        default:
-                            this.setState({score: this.state.score});
-                            break;
+                // Reset selected class elements
+                let resetElement = document.getElementsByClassName('Choice__options--option-selected');
+                resetElement[0].classList.remove('Choice__options--option-selected');
+                //Score Delegation
+                let choiceMade;
+                for (let i = 0; i < this.state.choiceElements.length; i++) {
+                    if (this.state.choiceElements[i].selected) {
+                        switch(this.state.choiceElements[i].quality) {
+                            case 'good':
+                                this.setState({score: this.state.score + 10});
+                                choiceMade = 'positive';
+                                break;
+                            case 'okay':
+                                this.setState({score: this.state.score + 1});
+                                choiceMade = 'okay';
+                                break;
+                            case 'bad':
+                                this.setState({score: this.state.score - 5});
+                                choiceMade = 'negative';
+                                break;
+                            default:
+                                this.setState({score: this.state.score});
+                                break;
+                        }
+                    }
+                    if(this.state.helpCountUsed) {
+                        let domElement = document.getElementById('option_'+i).children[0];
+                        domElement.className = "Choice__options--option-emoji";
                     }
                 }
-                if(this.state.helpCountUsed) {
-                    let domElement = document.getElementById('option_'+i).children[0];
-                    domElement.className = "Choice__options--option-emoji";
+                // Display feedback for user based on their choice
+                this.displayMessage(feedbackMessages[choiceMade][Math.floor(Math.random() * feedbackMessages[choiceMade].length)], choiceMade, 2000);
+                // Progress day forward and reset selection made boolean
+                this.setState({day: this.state.day + 1, selectionMade: false});
+                // Assign new elements for next day
+                this.setState({choicesIndex: this.state.choicesIndex + 1}, () => {
+                    let choiceElementsD = this.shuffleArray(this.state.choices[this.state.choicesIndex]);
+                    this.setState({choiceElements: choiceElementsD});
+                });
+
+                // Select interlude event data based on score
+                if(this.state.score >= (this.state.day - 1) * 5) {
+                    // Doing good
+                    let eventsD = this.state.events;
+                    let eventElementD = eventsD[this.state.eventsIndex][0];
+                    this.setState({eventElement: eventElementD});
+                } else if (this.state.score >= (this.state.day - 1) * 1) {
+                    // Doing okay
+                    let eventsD = this.state.events;
+                    let eventElementD = eventsD[this.state.eventsIndex][1];
+                    this.setState({eventElement: eventElementD});
+                } else if(this.state.score <= 0) {
+                    // Doing bad
+                    let eventsD = this.state.events;
+                    let eventElementD = eventsD[this.state.eventsIndex][2];
+                    this.setState({eventElement: eventElementD});
                 }
-            }
-            // Display feedback for user based on their choice
-            this.displayMessage(feedbackMessages[choiceMade][Math.floor(Math.random() * feedbackMessages[choiceMade].length)], choiceMade, 2000);
-            // Progress day forward and reset selection made boolean
-            this.setState({day: this.state.day + 1, selectionMade: false});
-            // Assign new elements for next day
-            this.setState({choicesIndex: this.state.choicesIndex + 1}, () => {
-                let choiceElementsD = this.shuffleArray(this.state.choices[this.state.choicesIndex]);
-                this.setState({choiceElements: choiceElementsD});
-            });
 
-            // Select interlude event data based on score
-            if(this.state.score >= (this.state.day - 1) * 5) {
-                // Doing good
-                let eventsD = this.state.events;
-                let eventElementD = eventsD[this.state.eventsIndex][0];
-                this.setState({eventElement: eventElementD});
-            } else if (this.state.score >= (this.state.day - 1) * 1) {
-                // Doing okay
-                let eventsD = this.state.events;
-                let eventElementD = eventsD[this.state.eventsIndex][1];
-                this.setState({eventElement: eventElementD});
-            } else if(this.state.score <= 0) {
-                // Doing bad
-                let eventsD = this.state.events;
-                let eventElementD = eventsD[this.state.eventsIndex][2];
-                this.setState({eventElement: eventElementD});
-            }
+                if(this.state.day % 5 === 0) {
+                    this.setState({renderChoice: false});
+                }
 
-            if(this.state.day % 5 === 0) {
+                if(this.state.helpCountUsed) {
+                    this.setState({helpCountUsed: false});
+                }
+            } else {
                 this.setState({renderChoice: false});
-            }
-
-            if(this.state.helpCountUsed) {
-                this.setState({helpCountUsed: false});
             }
         } else {
             // if the current rendered component is the interlude component the next button will run this code
@@ -255,15 +257,15 @@ class Story extends React.Component {
             <div className="Story">
                 {this.state.renderChoice
                     ? <Choice elements={this.state.choiceElements} day={this.state.day} handleElementClick={this.handleElementClick} handleHelpClick={this.handleHelpCLick} />
-                    : <Interlude title={this.state.eventElement.title} details={this.state.eventElement.details} />
+                    : <Interlude title={this.state.eventElement.title} details={this.state.eventElement.details}/>
                 }
                 {this.state.message.data !== "" &&
                     <div className={`Story__message Story__message--${this.state.message.state}`} id="story-message"><p>{this.state.message.data}</p></div>
                 }
-                <button className="Story__btn" onClick={(e) => this.handleBtnClick(e)} disabled={!this.state.selectionMade && this.state.renderChoice}>
-                    <span>Next</span> 
-                    <i className="material-icons">arrow_forward</i>
-                </button>
+                {(!this.state.renderChoice && this.state.eventsIndex === 3)
+                    ? <button className="Story__btn" onClick={() => window.location.reload()}><span>Play again</span><i className="material-icons">arrow_forward</i></button>
+                    : <button className="Story__btn" onClick={(e) => this.handleBtnClick(e)} disabled={!this.state.selectionMade && this.state.renderChoice}><span>Next</span><i className="material-icons">arrow_forward</i></button>
+                }
             </div>
         )
     }
