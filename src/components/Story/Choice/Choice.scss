@@ -50,6 +50,7 @@
             padding: 25px;
             margin: 0 25px;
             cursor: pointer;
+            outline: none;
 
             &-emoji {
                 font-family: Roboto, san-serif;
@@ -92,7 +93,8 @@
                 text-align: center;
             }
 
-            &:hover &-emoji{
+            &:hover &-emoji
+            ,:focus &-emoji{
                 box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
                 border-color: #f5ccfd;
                 background-color: #f5ccfd;

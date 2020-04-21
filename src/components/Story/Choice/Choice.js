@@ -7,8 +7,8 @@ const Choice = props => {
             <h1 className="Choice__title">Day {props.day}</h1>
             <button className="Choice__helpBtn" onClick={props.handleHelpClick}><span className="material-icons">help</span></button>
             <div className="Choice__options">
-                {props.elements.map((el => (
-                        <div className="Choice__options--option" key={el.id} onClick={props.handleElementClick(el.id)} id={`option_${el.id}`}>
+                {props.elements.map(((el, index) => (
+                        <div className="Choice__options--option" key={el.id} tabIndex={index+1} onClick={() => { props.handleElementClick(el.id) }} onKeyPress={(e) => { props.handleKeyPressed(e, el.id) }} id={`option_${el.id}`}>
                             <div className="Choice__options--option-emoji">
                             <span
                                 role="img"

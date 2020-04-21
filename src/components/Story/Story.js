@@ -33,6 +33,7 @@ class Story extends React.Component {
         this.handleBtnClick = this.handleBtnClick.bind(this);
         this.shuffleArray = this.shuffleArray.bind(this);
         this.displayMessage = this.displayMessage.bind(this);
+        this.handleKeyPressed = this.handleKeyPressed.bind(this);
     }
 
     componentDidMount() {
@@ -88,11 +89,16 @@ class Story extends React.Component {
             }, duration);
         });
     }
+ 
+    handleKeyPressed = (e, index) => {
+        if(e.key === "Enter") {
+            console.log(index);
+            console.log('key pressed');
+            this.handleElementClick(index);
+        }
+    }
 
-    handleElementClick = index => event => {
-        // preventing any default DOM action from clicking
-        event.preventDefault();
-
+    handleElementClick = index => {
         // Allowing the next button to be enabled by changing this boolean variable
         if(!this.state.selectionMade) {
             this.setState({selectionMade: true});
@@ -256,7 +262,7 @@ class Story extends React.Component {
         return (
             <div className="Story">
                 {this.state.renderChoice
-                    ? <Choice elements={this.state.choiceElements} day={this.state.day} handleElementClick={this.handleElementClick} handleHelpClick={this.handleHelpCLick} />
+                    ? <Choice elements={this.state.choiceElements} day={this.state.day} handleElementClick={this.handleElementClick} handleHelpClick={this.handleHelpCLick} handleKeyPressed={this.handleKeyPressed} />
                     : <Interlude title={this.state.eventElement.title} details={this.state.eventElement.details}/>
                 }
                 {this.state.message.data !== "" &&
